@@ -1,0 +1,104 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.homePage {
+  min-height: 100vh;
+}
+
+.hero {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  color: white;
+  padding: 5rem 0;
+  margin-bottom: 4rem;
+
+  @include mobile {
+    padding: 3rem 0;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+
+  @include mobile {
+    font-size: 2rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  opacity: 0.95;
+
+  @include mobile {
+    font-size: 1.1rem;
+  }
+}
+
+.howItWorks {
+  padding: 4rem 0;
+  background-color: $bg-light;
+
+  h2 {
+    color: $dark;
+    font-weight: 700;
+    font-size: 2.5rem;
+
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+}
+
+.stepCard {
+  height: 100%;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.stepNumber {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, $primary, $secondary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 auto 1.5rem;
+}
+
+.stepTitle {
+  color: $primary;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.stepText {
+  color: $text-primary;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.topArtisans {
+  padding: 4rem 0;
+
+  h2 {
+    color: $dark;
+    font-weight: 700;
+    font-size: 2.5rem;
+
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+}
