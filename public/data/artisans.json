@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Menuiserie Dubois",
+    "specialty": "Menuisier",
+    "category": "batiment",
+    "location": "Lyon",
+    "rating": 4.5,
+    "about": "Spécialisé dans la menuiserie traditionnelle et moderne depuis 20 ans.",
+    "email": "contact@menuiserie-dubois.fr",
+    "website": "https://www.menuiserie-dubois.fr",
+    "top": true
+  },
+  {
+    "id": 2,
+    "name": "Plomberie Martin",
+    "specialty": "Plombier",
+    "category": "services",
+    "location": "Grenoble",
+    "rating": 5,
+    "about": "Interventions rapides pour tous vos problèmes de plomberie.",
+    "email": "contact@plomberie-martin.fr",
+    "website": null,
+    "top": true
+  },
+  {
+    "id": 3,
+    "name": "Boulangerie Pain d'Or",
+    "specialty": "Boulanger",
+    "category": "alimentation",
+    "location": "Clermont-Ferrand",
+    "rating": 4.8,
+    "about": "Pains artisanaux et viennoiseries faits maison chaque jour.",
+    "email": "contact@pain-dor.fr",
+    "website": "https://www.pain-dor.fr",
+    "top": true
+  }
+]

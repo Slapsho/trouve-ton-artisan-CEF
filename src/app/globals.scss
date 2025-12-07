@@ -1,0 +1,21 @@
+@import './styles/variables';
+@import './styles/mixins';
+
+
+@import 'bootstrap/scss/bootstrap';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Graphik', Arial, sans-serif;
+  color: $text-primary;
+  background-color: $bg-light;
+}
+
+main {
+  min-height: calc(100vh - 200px);
+}
