@@ -1,0 +1,33 @@
+@import '../styles/variables';
+
+.card {
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid #ddd;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+  }
+}
+
+.name {
+  color: $primary;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.specialty {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.location {
+  color: $secondary;
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}

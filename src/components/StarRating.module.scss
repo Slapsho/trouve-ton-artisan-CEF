@@ -1,0 +1,20 @@
+@import '../styles/variables';
+
+.starRating {
+  display: inline-flex;
+  gap: 0.2rem;
+  font-size: 1.2rem;
+}
+
+.star {
+  color: $accent-green;
+}
+
+.halfStar {
+  color: $accent-green;
+  opacity: 0.5;
+}
+
+.emptyStar {
+  color: #ddd;
+}
