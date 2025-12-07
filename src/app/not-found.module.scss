@@ -1,0 +1,67 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.notFoundPage {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.imageContainer {
+  margin-bottom: 2rem;
+}
+
+.image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+
+  @include mobile {
+    max-width: 200px;
+  }
+}
+
+.title {
+  font-size: 8rem;
+  font-weight: 700;
+  color: $primary;
+  margin-bottom: 0;
+  line-height: 1;
+
+  @include mobile {
+    font-size: 5rem;
+  }
+}
+
+.subtitle {
+  color: $dark;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 1rem 0;
+
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+.text {
+  color: $text-primary;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.actions {
+  margin-top: 2rem;
+
+  button {
+    padding: 0.75rem 2rem;
+  }
+}
