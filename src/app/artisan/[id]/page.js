@@ -1,3 +1,5 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import StarRating from '@/components/StarRating';

@@ -1,12 +1,11 @@
+'use client';
+
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import { getTopArtisans } from '@/services/artisanService';
 import styles from './page.module.scss';
 
-export const metadata = {
-  title: 'Trouve ton artisan - Artisans de la région Auvergne-Rhône-Alpes',
-  description: 'Trouvez facilement un artisan qualifié dans votre région. Bâtiment, services, fabrication, alimentation.',
-};
+
 
 export default async function Home() {
 

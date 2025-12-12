@@ -1,12 +1,10 @@
+'use client';
+
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from '../batiment/category.module.scss';
 
-export const metadata = {
-  title: 'Artisans de l\'alimentation - Trouve ton artisan',
-  description: 'Trouvez des artisans de l\'alimentation en région Auvergne-Rhône-Alpes',
-};
 
 export default async function AlimentationPage() {
   const artisans = await getArtisansByCategory('alimentation');
