@@ -9,7 +9,6 @@ export default function Footer() {
     <footer className={styles.footer}>
       <Container>
         <Row>
-          {/* Liens légaux */}
           <Col md={6} className="mb-3 mb-md-0">
             <h5>Pages légales</h5>
             <ul className={styles.legalLinks}>
@@ -20,7 +19,6 @@ export default function Footer() {
             </ul>
           </Col>
 
-          {/* Coordonnées */}
           <Col md={6}>
             <h5>Nous contacter</h5>
             <address className={styles.contact}>

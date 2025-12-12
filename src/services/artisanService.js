@@ -1,4 +1,3 @@
-
 export async function getAllArtisans() {
   try {
     const response = await fetch('/data/artisans.json');
@@ -11,24 +10,20 @@ export async function getAllArtisans() {
   }
 }
 
-
 export async function getTopArtisans() {
   const artisans = await getAllArtisans();
   return artisans.filter(artisan => artisan.top === true).slice(0, 3);
 }
-
 
 export async function getArtisansByCategory(category) {
   const artisans = await getAllArtisans();
   return artisans.filter(artisan => artisan.category === category);
 }
 
-
 export async function getArtisanById(id) {
   const artisans = await getAllArtisans();
   return artisans.find(artisan => artisan.id === parseInt(id));
 }
-
 
 export async function searchArtisans(query) {
   if (!query || query.trim() === '') return [];

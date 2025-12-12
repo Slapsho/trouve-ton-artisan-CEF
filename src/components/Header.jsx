@@ -10,7 +10,6 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
-  // Gestion de la recherche
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -23,21 +22,18 @@ export default function Header() {
     <header className={styles.header}>
       <Navbar expand="lg" className={styles.navbar}>
         <Container>
-          {/* Logo */}
           <Navbar.Brand as={Link} href="/">
             <img 
-              src="/images/logo.png" 
+              src="/images/logo.svg" 
               alt="Trouve ton artisan" 
               className={styles.logo}
               height="50"
             />
           </Navbar.Brand>
 
-          {/* Toggle pour mobile */}
           <Navbar.Toggle aria-controls="main-navbar" />
           
           <Navbar.Collapse id="main-navbar">
-            {/* Menu navigation */}
             <Nav className="me-auto">
               <Nav.Link as={Link} href="/batiment">Bâtiment</Nav.Link>
               <Nav.Link as={Link} href="/services">Services</Nav.Link>
@@ -45,7 +41,6 @@ export default function Header() {
               <Nav.Link as={Link} href="/alimentation">Alimentation</Nav.Link>
             </Nav>
 
-            {/* Barre de recherche */}
             <Form className="d-flex" onSubmit={handleSearch}>
               <Form.Control
                 type="search"

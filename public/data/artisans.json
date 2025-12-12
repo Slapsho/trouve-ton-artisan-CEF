@@ -6,7 +6,7 @@
     "category": "batiment",
     "location": "Lyon",
     "rating": 4.5,
-    "about": "Spécialisé dans la menuiserie traditionnelle et moderne depuis 20 ans.",
+    "about": "Spécialisé dans la menuiserie traditionnelle et moderne depuis 20 ans. Fabrication sur mesure de portes, fenêtres, escaliers et mobilier. Travail soigné et délais respectés.",
     "email": "contact@menuiserie-dubois.fr",
     "website": "https://www.menuiserie-dubois.fr",
     "top": true
@@ -18,7 +18,7 @@
     "category": "services",
     "location": "Grenoble",
     "rating": 5,
-    "about": "Interventions rapides pour tous vos problèmes de plomberie.",
+    "about": "Interventions rapides pour tous vos problèmes de plomberie. Dépannage 7j/7, installation sanitaire, chauffage et climatisation. 15 ans d'expérience.",
     "email": "contact@plomberie-martin.fr",
     "website": null,
     "top": true
@@ -30,9 +30,93 @@
     "category": "alimentation",
     "location": "Clermont-Ferrand",
     "rating": 4.8,
-    "about": "Pains artisanaux et viennoiseries faits maison chaque jour.",
+    "about": "Pains artisanaux et viennoiseries faits maison chaque jour. Farines bio et locales. Spécialités auvergnates.",
     "email": "contact@pain-dor.fr",
     "website": "https://www.pain-dor.fr",
     "top": true
+  },
+  {
+    "id": 4,
+    "name": "Électricité Garnier",
+    "specialty": "Électricien",
+    "category": "batiment",
+    "location": "Lyon",
+    "rating": 4.2,
+    "about": "Installation et dépannage électrique pour particuliers et professionnels. Mise aux normes, domotique, éclairage LED.",
+    "email": "contact@elec-garnier.fr",
+    "website": null,
+    "top": false
+  },
+  {
+    "id": 5,
+    "name": "Poterie Artisanale",
+    "specialty": "Potier",
+    "category": "fabrication",
+    "location": "Annecy",
+    "rating": 4.7,
+    "about": "Créations uniques en céramique et poterie traditionnelle. Pièces décoratives et utilitaires. Ateliers et stages proposés.",
+    "email": "contact@poterie-annecy.fr",
+    "website": "https://www.poterie-annecy.fr",
+    "top": false
+  },
+  {
+    "id": 6,
+    "name": "Coiffure Élégance",
+    "specialty": "Coiffeur",
+    "category": "services",
+    "location": "Chambéry",
+    "rating": 4.9,
+    "about": "Salon de coiffure moderne avec des produits bio. Coupes tendances, colorations végétales, coiffures de mariage.",
+    "email": "contact@coiffure-elegance.fr",
+    "website": null,
+    "top": false
+  },
+  {
+    "id": 7,
+    "name": "Maçonnerie Alpes",
+    "specialty": "Maçon",
+    "category": "batiment",
+    "location": "Grenoble",
+    "rating": 4.6,
+    "about": "Construction, rénovation et extension. Maçonnerie traditionnelle et contemporaine. Devis gratuit et personnalisé.",
+    "email": "contact@maconnerie-alpes.fr",
+    "website": "https://www.maconnerie-alpes.fr",
+    "top": false
+  },
+  {
+    "id": 8,
+    "name": "Forge Traditionnelle",
+    "specialty": "Forgeron",
+    "category": "fabrication",
+    "location": "Lyon",
+    "rating": 4.4,
+    "about": "Ferronnerie d'art et forge traditionnelle. Portails, rampes, mobilier en fer forgé. Créations sur mesure.",
+    "email": "contact@forge-lyon.fr",
+    "website": null,
+    "top": false
+  },
+  {
+    "id": 9,
+    "name": "Fromagerie du Terroir",
+    "specialty": "Fromager",
+    "category": "alimentation",
+    "location": "Annecy",
+    "rating": 4.9,
+    "about": "Fromages fermiers et affinés de la région. Sélection de produits locaux. Conseils et dégustation.",
+    "email": "contact@fromagerie-terroir.fr",
+    "website": "https://www.fromagerie-terroir.fr",
+    "top": false
+  },
+  {
+    "id": 10,
+    "name": "Jardinier Nature",
+    "specialty": "Paysagiste",
+    "category": "services",
+    "location": "Clermont-Ferrand",
+    "rating": 4.3,
+    "about": "Création et entretien d'espaces verts. Taille, élagage, plantation. Approche écologique et durable.",
+    "email": "contact@jardinier-nature.fr",
+    "website": null,
+    "top": false
   }
 ]
