@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Card } from 'react-bootstrap';
 import StarRating from './StarRating';
 import styles from './ArtisanCard.module.scss';
+import { useEffect, useState } from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ArtisanCard({ artisan }) {
   return (
