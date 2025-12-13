@@ -1,12 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from '../batiment/category.module.scss';
 
-export default async function ServicesPage() {
-  const artisans = await getArtisansByCategory('services');
+export default function ServicesPage() {
+  const [artisans, setArtisans] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadArtisans() {
+      const data = await getArtisansByCategory('services');
+      setArtisans(data);
+      setLoading(false);
+    }
+    loadArtisans();
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner message="Recherche des artisans de services..." />;
+  }
 
   return (
     <div className={styles.categoryPage}>
@@ -15,7 +31,8 @@ export default async function ServicesPage() {
           <h1>Artisans de services</h1>
           <p className={styles.description}>
             Découvrez nos artisans spécialisés dans les services : 
-            réparation, entretien, conseil et bien plus encore.
+            plombiers, électriciens, coiffeurs, paysagistes, dépannage 
+            et bien plus encore.
           </p>
           <p className={styles.count}>
             {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}

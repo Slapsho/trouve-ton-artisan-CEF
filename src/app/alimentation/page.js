@@ -1,13 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from '../batiment/category.module.scss';
 
+export default function AlimentationPage() {
+  const [artisans, setArtisans] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function AlimentationPage() {
-  const artisans = await getArtisansByCategory('alimentation');
+  useEffect(() => {
+    async function loadArtisans() {
+      const data = await getArtisansByCategory('alimentation');
+      setArtisans(data);
+      setLoading(false);
+    }
+    loadArtisans();
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner message="Recherche des artisans de l'alimentation..." />;
+  }
 
   return (
     <div className={styles.categoryPage}>
@@ -16,7 +31,7 @@ export default async function AlimentationPage() {
           <h1>Artisans de l'alimentation</h1>
           <p className={styles.description}>
             Découvrez nos artisans du goût : boulangers, pâtissiers, 
-            fromagers, bouchers et bien plus encore.
+            fromagers, bouchers, chocolatiers, traiteurs et bien plus encore.
           </p>
           <p className={styles.count}>
             {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}

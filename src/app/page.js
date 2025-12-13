@@ -1,19 +1,33 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { getTopArtisans } from '@/services/artisanService';
 import styles from './page.module.scss';
 
+export default function Home() {
+  const [topArtisans, setTopArtisans] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function loadArtisans() {
+      const artisans = await getTopArtisans();
+      setTopArtisans(artisans);
+      setLoading(false); // ✅ Important : mettre false après le chargement
+    }
+    loadArtisans();
+  }, []);
 
-export default async function Home() {
-
-  const topArtisans = await getTopArtisans();
+  // ✅ Si loading = true, afficher le spinner
+  if (loading) {
+    return <LoadingSpinner message="Chargement des artisans..." />;
+  }
 
   return (
     <div className={styles.homePage}>
-    
+      {/* Section Hero */}
       <section className={styles.hero}>
         <Container>
           <Row className="align-items-center">
@@ -28,6 +42,7 @@ export default async function Home() {
         </Container>
       </section>
 
+      {/* Section Comment ça marche */}
       <section className={styles.howItWorks}>
         <Container>
           <h2 className="text-center mb-5">Comment trouver mon artisan ?</h2>
@@ -88,18 +103,24 @@ export default async function Home() {
         </Container>
       </section>
 
-      
+      {/* Section Artisans du mois */}
       <section className={styles.topArtisans}>
         <Container>
           <h2 className="text-center mb-5">Les artisans du mois</h2>
           
-          <Row className="g-4">
-            {topArtisans.map(artisan => (
-              <Col key={artisan.id} md={6} lg={4}>
-                <ArtisanCard artisan={artisan} />
-              </Col>
-            ))}
-          </Row>
+          {topArtisans.length > 0 ? (
+            <Row className="g-4">
+              {topArtisans.map(artisan => (
+                <Col key={artisan.id} md={6} lg={4}>
+                  <ArtisanCard artisan={artisan} />
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <div className="text-center">
+              <p>Aucun artisan du mois pour le moment.</p>
+            </div>
+          )}
         </Container>
       </section>
     </div>

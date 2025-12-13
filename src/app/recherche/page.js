@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { searchArtisans } from '@/services/artisanService';
 import styles from './recherche.module.scss';
 
@@ -40,10 +41,7 @@ export default function RecherchePage() {
         </div>
 
         {loading ? (
-          <div className={styles.loading}>
-            <Spinner animation="border" variant="primary" />
-            <p>Recherche en cours...</p>
-          </div>
+          <LoadingSpinner message="Recherche en cours..." />
         ) : (
           <>
             {artisans.length > 0 ? (

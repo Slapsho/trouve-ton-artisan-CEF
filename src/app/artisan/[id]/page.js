@@ -1,31 +1,31 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import StarRating from '@/components/StarRating';
 import ContactForm from '@/components/ContactForm';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { getArtisanById } from '@/services/artisanService';
 import styles from './artisan.module.scss';
 
-export async function generateMetadata({ params }) {
-  const artisan = await getArtisanById(params.id);
-  
-  if (!artisan) {
-    return {
-      title: 'Artisan non trouvé',
-    };
+export default function ArtisanPage({ params }) {
+  const [artisan, setArtisan] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadArtisan() {
+      const data = await getArtisanById(params.id);
+      setArtisan(data);
+      setLoading(false);
+    }
+    loadArtisan();
+  }, [params.id]);
+
+  if (loading) {
+    return <LoadingSpinner message="Chargement du profil..." />;
   }
 
-  return {
-    title: `${artisan.name} - ${artisan.specialty} à ${artisan.location}`,
-    description: artisan.about || `Découvrez ${artisan.name}, ${artisan.specialty} à ${artisan.location}`,
-  };
-}
-
-export default async function ArtisanPage({ params }) {
-  const artisan = await getArtisanById(params.id);
-
-  
   if (!artisan) {
     notFound();
   }
@@ -34,7 +34,6 @@ export default async function ArtisanPage({ params }) {
     <div className={styles.artisanPage}>
       <Container>
         <Row className="g-4">
-          {/* Informations principales */}
           <Col lg={6}>
             <Card className={styles.infoCard}>
               <Card.Body>
@@ -80,7 +79,6 @@ export default async function ArtisanPage({ params }) {
             </Card>
           </Col>
 
-          {/* Formulaire de contact */}
           <Col lg={6}>
             <ContactForm 
               artisanEmail={artisan.email}
