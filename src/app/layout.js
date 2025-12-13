@@ -2,11 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.scss';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-
-export const metadata = {
-  title: 'Trouve ton artisan - Auvergne-Rhône-Alpes',
-  description: 'Trouvez facilement un artisan qualifié dans votre région',
-};
+import ScrollToTop from '@/components/ScrollToTop';  
 
 export default function RootLayout({ children }) {
   return (
@@ -18,6 +14,7 @@ export default function RootLayout({ children }) {
         <Header />
         <main>{children}</main>
         <Footer />
+        <ScrollToTop />  
       </body>
     </html>
   );

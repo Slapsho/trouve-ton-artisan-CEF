@@ -6,6 +6,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NoResults from '@/components/NoResults';
+import Breadcrumb from '@/components/Breadcrumb';  
 import { searchArtisans } from '@/services/artisanService';
 import styles from './recherche.module.scss';
 
@@ -30,45 +31,52 @@ export default function RecherchePage() {
   }, [query]);
 
   return (
-    <div className={styles.recherchePage}>
-      <Container>
-        <div className={styles.header}>
-          <h1>Résultats de recherche</h1>
-          {query && (
-            <p className={styles.query}>
-              Recherche pour : <strong>"{query}"</strong>
-            </p>
-          )}
-        </div>
+    <>
+      
+      <Breadcrumb items={[
+        { label: `Recherche : "${query || ''}"` }
+      ]} />
 
-        {loading ? (
-          <LoadingSpinner message="Recherche en cours..." />
-        ) : (
-          <>
-            {artisans.length > 0 ? (
-              <>
-                <p className={styles.count}>
-                  {artisans.length} résultat{artisans.length > 1 ? 's' : ''} trouvé{artisans.length > 1 ? 's' : ''}
-                </p>
-                <Row className="g-4">
-                  {artisans.map(artisan => (
-                    <Col key={artisan.id} md={6} lg={4}>
-                      <ArtisanCard artisan={artisan} />
-                    </Col>
-                  ))}
-                </Row>
-              </>
-            ) : (
-              <NoResults 
-                title="Aucun artisan trouvé"
-                message={`Aucun artisan ne correspond à votre recherche "${query}".`}
-                showSuggestions={true}
-                showCategories={true}
-              />
+      <div className={styles.recherchePage}>
+        <Container>
+          <div className={styles.header}>
+            <h1>Résultats de recherche</h1>
+            {query && (
+              <p className={styles.query}>
+                Recherche pour : <strong>"{query}"</strong>
+              </p>
             )}
-          </>
-        )}
-      </Container>
-    </div>
+          </div>
+
+          {loading ? (
+            <LoadingSpinner message="Recherche en cours..." />
+          ) : (
+            <>
+              {artisans.length > 0 ? (
+                <>
+                  <p className={styles.count}>
+                    {artisans.length} résultat{artisans.length > 1 ? 's' : ''} trouvé{artisans.length > 1 ? 's' : ''}
+                  </p>
+                  <Row className="g-4">
+                    {artisans.map(artisan => (
+                      <Col key={artisan.id} md={6} lg={4}>
+                        <ArtisanCard artisan={artisan} />
+                      </Col>
+                    ))}
+                  </Row>
+                </>
+              ) : (
+                <NoResults 
+                  title="Aucun artisan trouvé"
+                  message={`Aucun artisan ne correspond à votre recherche "${query}".`}
+                  showSuggestions={true}
+                  showCategories={true}
+                />
+              )}
+            </>
+          )}
+        </Container>
+      </div>
+    </>
   );
 }

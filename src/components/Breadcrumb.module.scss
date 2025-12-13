@@ -1,0 +1,93 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.breadcrumbWrapper {
+  background-color: $bg-light;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+}
+
+.breadcrumbList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumbLink {
+  color: $primary;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: white;
+    color: $secondary;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+}
+
+.icon {
+  font-size: 1rem;
+}
+
+.separator {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 300;
+  user-select: none; 
+}
+
+.current {
+  color: $text-primary;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+
+
+@include mobile {
+  .breadcrumbWrapper {
+    padding: 0.75rem 0;
+  }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+  }
+
+  .icon {
+    font-size: 0.9rem;
+  }
+
+  
+  @media (max-width: 400px) {
+    .label {
+      display: none;
+    }
+
+    .icon {
+      font-size: 1.2rem;
+    }
+  }
+}

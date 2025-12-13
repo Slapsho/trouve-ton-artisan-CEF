@@ -1,0 +1,77 @@
+@import '../styles/variables';
+
+.scrollTop {
+ 
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  
+  
+  width: 55px;
+  height: 55px;
+  
+  
+  border-radius: 50%; 
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  
+  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  
+
+  z-index: 999;
+  
+  transition: all 0.3s ease;
+  
+  
+  animation: fadeIn 0.3s ease-in;
+
+ 
+  &:hover {
+    background: linear-gradient(135deg, $secondary 0%, $primary 100%);
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 20px rgba(0, 116, 199, 0.4);
+  }
+
+  
+  &:active {
+    transform: translateY(-2px);
+  }
+
+  
+  &:focus {
+    outline: 3px solid rgba(0, 116, 199, 0.5);
+    outline-offset: 2px;
+  }
+
+  
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+.arrow {
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

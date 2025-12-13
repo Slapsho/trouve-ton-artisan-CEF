@@ -6,6 +6,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import StarRating from '@/components/StarRating';
 import ContactForm from '@/components/ContactForm';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import Breadcrumb from '@/components/Breadcrumb';  
 import { getArtisanById } from '@/services/artisanService';
 import styles from './artisan.module.scss';
 
@@ -30,63 +31,89 @@ export default function ArtisanPage({ params }) {
     notFound();
   }
 
+  
+  const getCategoryLabel = (category) => {
+    const labels = {
+      'batiment': 'Bâtiment',
+      'services': 'Services',
+      'fabrication': 'Fabrication',
+      'alimentation': 'Alimentation'
+    };
+    return labels[category] || category;
+  };
+
+  const getCategoryHref = (category) => {
+    return `/${category}`;
+  };
+
   return (
-    <div className={styles.artisanPage}>
-      <Container>
-        <Row className="g-4">
-          <Col lg={6}>
-            <Card className={styles.infoCard}>
-              <Card.Body>
-                <h1 className={styles.name}>{artisan.name}</h1>
-                
-                <div className={styles.rating}>
-                  <StarRating rating={artisan.rating} />
-                  <span className={styles.ratingText}>
-                    {artisan.rating}/5
-                  </span>
-                </div>
+    <>
+     
+      <Breadcrumb items={[
+        { 
+          label: getCategoryLabel(artisan.category), 
+          href: getCategoryHref(artisan.category) 
+        },
+        { label: artisan.name }
+      ]} />
 
-                <div className={styles.detail}>
-                  <strong>Spécialité :</strong>
-                  <span>{artisan.specialty}</span>
-                </div>
-
-                <div className={styles.detail}>
-                  <strong>Localisation :</strong>
-                  <span>📍 {artisan.location}</span>
-                </div>
-
-                {artisan.about && (
-                  <div className={styles.about}>
-                    <h2>À propos</h2>
-                    <p>{artisan.about}</p>
+      <div className={styles.artisanPage}>
+        <Container>
+          <Row className="g-4">
+            <Col lg={6}>
+              <Card className={styles.infoCard}>
+                <Card.Body>
+                  <h1 className={styles.name}>{artisan.name}</h1>
+                  
+                  <div className={styles.rating}>
+                    <StarRating rating={artisan.rating} />
+                    <span className={styles.ratingText}>
+                      {artisan.rating}/5
+                    </span>
                   </div>
-                )}
 
-                {artisan.website && (
-                  <div className={styles.website}>
-                    <Button 
-                      variant="outline-primary" 
-                      href={artisan.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      🌐 Visiter le site web
-                    </Button>
+                  <div className={styles.detail}>
+                    <strong>Spécialité :</strong>
+                    <span>{artisan.specialty}</span>
                   </div>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
 
-          <Col lg={6}>
-            <ContactForm 
-              artisanEmail={artisan.email}
-              artisanName={artisan.name}
-            />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+                  <div className={styles.detail}>
+                    <strong>Localisation :</strong>
+                    <span>📍 {artisan.location}</span>
+                  </div>
+
+                  {artisan.about && (
+                    <div className={styles.about}>
+                      <h2>À propos</h2>
+                      <p>{artisan.about}</p>
+                    </div>
+                  )}
+
+                  {artisan.website && (
+                    <div className={styles.website}>
+                      <Button 
+                        variant="outline-primary" 
+                        href={artisan.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        🌐 Visiter le site web
+                      </Button>
+                    </div>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col lg={6}>
+              <ContactForm 
+                artisanEmail={artisan.email}
+                artisanName={artisan.name}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 }
