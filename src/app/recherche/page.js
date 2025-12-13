@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NoResults from '@/components/NoResults';
 import { searchArtisans } from '@/services/artisanService';
 import styles from './recherche.module.scss';
 
@@ -58,12 +59,12 @@ export default function RecherchePage() {
                 </Row>
               </>
             ) : (
-              <div className={styles.noResults}>
-                <p>Aucun artisan trouvé pour votre recherche.</p>
-                <p className={styles.suggestion}>
-                  Essayez avec d'autres mots-clés ou parcourez nos catégories.
-                </p>
-              </div>
+              <NoResults 
+                title="Aucun artisan trouvé"
+                message={`Aucun artisan ne correspond à votre recherche "${query}".`}
+                showSuggestions={true}
+                showCategories={true}
+              />
             )}
           </>
         )}

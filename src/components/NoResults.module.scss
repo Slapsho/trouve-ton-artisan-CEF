@@ -1,0 +1,94 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 2rem auto;
+
+  @include mobile {
+    padding: 3rem 1.5rem;
+  }
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+}
+
+.title {
+  color: $dark;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+
+  @include mobile {
+    font-size: 1.5rem;
+  }
+}
+
+.message {
+  color: $text-primary;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.suggestions {
+  background-color: $bg-light;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.suggestionsTitle {
+  color: $dark;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.suggestionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    color: $text-primary;
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+
+    &::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+}
+
+.categories {
+  margin-top: 2rem;
+}
+
+.categoriesTitle {
+  color: $dark;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.categoryButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}

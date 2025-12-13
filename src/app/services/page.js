@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NoResults from '@/components/NoResults';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from '../batiment/category.module.scss';
 
@@ -34,9 +35,11 @@ export default function ServicesPage() {
             plombiers, électriciens, coiffeurs, paysagistes, dépannage 
             et bien plus encore.
           </p>
-          <p className={styles.count}>
-            {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
-          </p>
+          {artisans.length > 0 && (
+            <p className={styles.count}>
+              {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
+            </p>
+          )}
         </div>
 
         {artisans.length > 0 ? (
@@ -48,9 +51,12 @@ export default function ServicesPage() {
             ))}
           </Row>
         ) : (
-          <div className={styles.noResults}>
-            <p>Aucun artisan trouvé dans cette catégorie pour le moment.</p>
-          </div>
+          <NoResults 
+            title="Aucun artisan de services"
+            message="Aucun artisan de services n'est disponible pour le moment dans notre base de données."
+            showSuggestions={false}
+            showCategories={true}
+          />
         )}
       </Container>
     </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NoResults from '@/components/NoResults';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from '../batiment/category.module.scss';
 
@@ -33,9 +34,11 @@ export default function AlimentationPage() {
             Découvrez nos artisans du goût : boulangers, pâtissiers, 
             fromagers, bouchers, chocolatiers, traiteurs et bien plus encore.
           </p>
-          <p className={styles.count}>
-            {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
-          </p>
+          {artisans.length > 0 && (
+            <p className={styles.count}>
+              {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
+            </p>
+          )}
         </div>
 
         {artisans.length > 0 ? (
@@ -47,9 +50,12 @@ export default function AlimentationPage() {
             ))}
           </Row>
         ) : (
-          <div className={styles.noResults}>
-            <p>Aucun artisan trouvé dans cette catégorie pour le moment.</p>
-          </div>
+          <NoResults 
+            title="Aucun artisan de l'alimentation"
+            message="Aucun artisan de l'alimentation n'est disponible pour le moment dans notre base de données."
+            showSuggestions={false}
+            showCategories={true}
+          />
         )}
       </Container>
     </div>

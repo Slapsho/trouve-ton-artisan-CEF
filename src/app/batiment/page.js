@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NoResults from '@/components/NoResults';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from './category.module.scss';
 
@@ -33,9 +34,11 @@ export default function BatimentPage() {
             Découvrez nos artisans spécialisés dans le bâtiment : menuisiers, 
             plombiers, électriciens, maçons et bien plus encore.
           </p>
-          <p className={styles.count}>
-            {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
-          </p>
+          {artisans.length > 0 && (
+            <p className={styles.count}>
+              {artisans.length} artisan{artisans.length > 1 ? 's' : ''} disponible{artisans.length > 1 ? 's' : ''}
+            </p>
+          )}
         </div>
 
         {artisans.length > 0 ? (
@@ -47,9 +50,12 @@ export default function BatimentPage() {
             ))}
           </Row>
         ) : (
-          <div className={styles.noResults}>
-            <p>Aucun artisan trouvé dans cette catégorie pour le moment.</p>
-          </div>
+          <NoResults 
+            title="Aucun artisan du bâtiment"
+            message="Aucun artisan du bâtiment n'est disponible pour le moment."
+            showSuggestions={false}
+            showCategories={true}
+          />
         )}
       </Container>
     </div>
