@@ -11,7 +11,6 @@ import Breadcrumb from '@/components/Breadcrumb';
 import { searchArtisans } from '@/services/artisanService';
 import styles from './recherche.module.scss';
 
-
 function RechercheContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
@@ -81,7 +80,6 @@ function RechercheContent() {
     </>
   );
 }
-
 
 export default function RecherchePage() {
   return (

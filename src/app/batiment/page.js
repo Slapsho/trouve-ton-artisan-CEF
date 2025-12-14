@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NoResults from '@/components/NoResults';
-import Breadcrumb from '@/components/Breadcrumb';  
+import Breadcrumb from '@/components/Breadcrumb';
 import { getArtisansByCategory } from '@/services/artisanService';
 import styles from './category.module.scss';
 
@@ -28,10 +28,7 @@ export default function BatimentPage() {
 
   return (
     <>
-    
-      <Breadcrumb items={[
-        { label: 'Bâtiment' }
-      ]} />
+      <Breadcrumb items={[{ label: 'Bâtiment' }]} />
 
       <div className={styles.categoryPage}>
         <Container>
