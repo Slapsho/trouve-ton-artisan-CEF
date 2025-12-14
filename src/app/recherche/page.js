@@ -1,16 +1,18 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Container, Row, Col } from 'react-bootstrap';
 import ArtisanCard from '@/components/ArtisanCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NoResults from '@/components/NoResults';
-import Breadcrumb from '@/components/Breadcrumb';  
+import Breadcrumb from '@/components/Breadcrumb';
 import { searchArtisans } from '@/services/artisanService';
 import styles from './recherche.module.scss';
 
-export default function RecherchePage() {
+
+function RechercheContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q');
   
@@ -32,7 +34,6 @@ export default function RecherchePage() {
 
   return (
     <>
-      
       <Breadcrumb items={[
         { label: `Recherche : "${query || ''}"` }
       ]} />
@@ -78,5 +79,14 @@ export default function RecherchePage() {
         </Container>
       </div>
     </>
+  );
+}
+
+
+export default function RecherchePage() {
+  return (
+    <Suspense fallback={<LoadingSpinner message="Chargement de la recherche..." />}>
+      <RechercheContent />
+    </Suspense>
   );
 }
