@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Cercle de fond bleu -->
-  <circle cx="32" cy="32" r="32" fill="#0088CC"/>
-  
-  <!-- Symbole blanc stylisé (abstrait) -->
-  <path d="M 20 42 L 20 38 L 44 38 L 44 42 Z" fill="white"/>
-  <path d="M 28 22 L 32 28 L 36 22 L 42 28 L 38 34 L 32 28 L 26 34 L 22 28 Z" fill="white" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-</svg>

@@ -2,48 +2,96 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { sanitizeInput, escapeHtml } from '@/utils/sanitize';
 import { validateRequired, validateEmail } from '@/utils/validators';
+import { rateLimit, getClientIp } from '@/utils/rateLimit';
 
+
+const limiter = rateLimit({
+  interval: 60 * 1000, 
+  maxRequestsPerInterval: 5,
+});
 
 function createTransporter() {
-  return nodemailer.createTransport({
+ 
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  return nodemailer.createTransporter({
     host: process.env.SMTP_HOST || 'localhost',
     port: parseInt(process.env.SMTP_PORT || '1025'),
-    secure: false, 
+    secure: isProduction, 
     auth: process.env.SMTP_USER ? {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     } : undefined,
     tls: {
-      rejectUnauthorized: false 
+   
+      rejectUnauthorized: isProduction,
+      minVersion: 'TLSv1.2', 
     }
   });
 }
-
 
 function validateContactForm(data) {
   const errors = [];
 
   if (!validateRequired(data.name)) {
     errors.push('Le nom est requis');
+  } else if (data.name.trim().length < 2) {
+    errors.push('Le nom doit contenir au moins 2 caractères');
+  } else if (data.name.trim().length > 100) {
+    errors.push('Le nom ne peut pas dépasser 100 caractères');
   }
 
+ 
   if (!validateRequired(data.subject)) {
-    errors.push('L\'objet est requis');
+    errors.push("L'objet est requis");
+  } else if (data.subject.trim().length < 3) {
+    errors.push("L'objet doit contenir au moins 3 caractères");
+  } else if (data.subject.trim().length > 200) {
+    errors.push("L'objet ne peut pas dépasser 200 caractères");
   }
 
+ 
   if (!validateRequired(data.message)) {
     errors.push('Le message est requis');
   } else if (data.message.trim().length < 10) {
     errors.push('Le message doit contenir au moins 10 caractères');
+  } else if (data.message.trim().length > 5000) {
+    errors.push('Le message ne peut pas dépasser 5000 caractères');
   }
 
-  if (!validateRequired(data.to) || !validateEmail(data.to)) {
-    errors.push('L\'adresse email de destination est invalide');
+
+  if (!validateRequired(data.to)) {
+    errors.push("L'adresse email de destination est requise");
+  } else if (!validateEmail(data.to)) {
+    errors.push("L'adresse email de destination est invalide");
+  } else {
+    
+    const emailParts = data.to.split('@');
+    if (emailParts.length !== 2) {
+      errors.push("Format d'email invalide");
+    } else {
+      const [localPart, domain] = emailParts;
+      
+    
+      if (localPart.length > 64) {
+        errors.push("La partie locale de l'email est trop longue");
+      }
+      
+     
+      if (domain.length > 255 || !domain.includes('.')) {
+        errors.push("Le domaine de l'email est invalide");
+      }
+      
+      
+      const suspiciousDomains = ['tempmail.com', 'guerrillamail.com', '10minutemail.com'];
+      if (suspiciousDomains.some(d => domain.toLowerCase().includes(d))) {
+        errors.push("Les adresses email temporaires ne sont pas autorisées");
+      }
+    }
   }
 
   return errors;
 }
-
 
 function generateEmailTemplate(data) {
   const sanitizedName = escapeHtml(data.name);
@@ -107,10 +155,6 @@ function generateEmailTemplate(data) {
           font-size: 12px;
           border-radius: 0 0 8px 8px;
         }
-        .footer a {
-          color: #0074c7;
-          text-decoration: none;
-        }
       </style>
     </head>
     <body>
@@ -146,18 +190,35 @@ function generateEmailTemplate(data) {
       <div class="footer">
         <p>Cet email a été envoyé via la plateforme Trouve ton artisan</p>
         <p>© ${new Date().getFullYear()} Région Auvergne-Rhône-Alpes</p>
-        <p>
-          <a href="${process.env.NEXT_PUBLIC_SITE_URL}">Visiter le site</a>
-        </p>
       </div>
     </body>
     </html>
   `;
 }
 
-
 export async function POST(request) {
   try {
+   
+    const clientIp = getClientIp(request);
+    
+    try {
+      await limiter.check(clientIp);
+    } catch (rateLimitError) {
+      console.warn(`⚠️ Rate limit exceeded for IP: ${clientIp}`);
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: `Trop de tentatives. Veuillez réessayer dans ${rateLimitError.retryAfter} secondes.`,
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': rateLimitError.retryAfter.toString(),
+          },
+        }
+      );
+    }
+
     
     const data = await request.json();
 
@@ -170,9 +231,10 @@ export async function POST(request) {
       artisanName: sanitizeInput(data.artisanName)
     };
 
-    // Validation
+    
     const validationErrors = validateContactForm(sanitizedData);
     if (validationErrors.length > 0) {
+      console.warn('❌ Validation failed:', validationErrors);
       return NextResponse.json(
         { 
           success: false, 
@@ -182,21 +244,20 @@ export async function POST(request) {
       );
     }
 
-    
+   
     const transporter = createTransporter();
 
-    
     try {
       await transporter.verify();
-      console.log('✅ Serveur SMTP prêt à envoyer des emails');
+      console.log('✅ Serveur SMTP prêt');
     } catch (error) {
-      console.error('❌ Erreur de connexion SMTP:', error);
+      console.error('❌ Erreur SMTP:', error);
       return NextResponse.json(
         { 
           success: false, 
-          message: 'Erreur de configuration du serveur email' 
+          message: 'Service email temporairement indisponible' 
         },
-        { status: 500 }
+        { status: 503 }
       );
     }
 
@@ -221,41 +282,45 @@ Merci de répondre sous 48 heures.
       html: generateEmailTemplate(sanitizedData)
     };
 
-    
+  
     const info = await transporter.sendMail(mailOptions);
 
-    console.log('✅ Email envoyé avec succès:', info.messageId);
-    console.log('📧 Aperçu disponible sur: http://localhost:1080');
+    console.log('✅ Email envoyé:', info.messageId, 'to:', sanitizedData.to);
 
-   
     return NextResponse.json({
       success: true,
       message: 'Email envoyé avec succès',
-      messageId: info.messageId
     });
 
   } catch (error) {
-    console.error('❌ Erreur lors de l\'envoi de l\'email:', error);
+    console.error('❌ Erreur:', error);
+    
+    
+    const isProduction = process.env.NODE_ENV === 'production';
     
     return NextResponse.json(
       { 
         success: false, 
-        message: 'Une erreur est survenue lors de l\'envoi de l\'email',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        message: 'Une erreur est survenue lors de l\'envoi du message',
+        ...(isProduction ? {} : { error: error.message }),
       },
       { status: 500 }
     );
   }
 }
 
-
 export async function GET() {
+ 
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { error: 'Not found' },
+      { status: 404 }
+    );
+  }
+
   return NextResponse.json({
     status: 'ok',
     message: 'API de contact opérationnelle',
-    maildev: {
-      web: 'http://localhost:1080',
-      smtp: 'localhost:1025'
-    }
+    environment: process.env.NODE_ENV,
   });
 }
